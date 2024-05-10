@@ -521,6 +521,7 @@ defmodule Styler.Style.PipesTest do
     test "rewrites then/2 when the passed function is a named function reference" do
       assert_style("a |> then(&fun/1) |> c", "a |> fun() |> c()", enable: :pipes)
       assert_style("a |> then(&(&1 / 1)) |> c", "a |> Kernel./(1) |> c()", enable: :pipes)
+      assert_style "a |> then(&(&1 * 2 / 1)) |> c()", enable: :pipes
       assert_style("a |> then(&fun/1)", "fun(a)", enable: :pipes)
       assert_style("a |> then(&fun(&1)) |> c", "a |> fun() |> c()", enable: :pipes)
       assert_style("a |> then(&fun(&1, d)) |> c", "a |> fun(d) |> c()", enable: :pipes)
